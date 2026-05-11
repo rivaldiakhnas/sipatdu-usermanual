@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buku Panduan SIPATDU — RSUD Dr. Saiful Anwar Malang</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --surface-2: #f7fafc;
+    --border: #e2e8f0;
+    --primary: #1a56db;
+    --primary-light: #eff6ff;
+    --primary-mid: #bfdbfe;
+    --accent: #0ea5e9;
+    --accent-warm: #f59e0b;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --text: #0f172a;
+    --text-2: #475569;
+    --text-3: #94a3b8;
+    --sidebar-w: 280px;
+    --header-h: 64px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.1), 0 16px 40px rgba(0,0,0,.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--header-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 24px;
+    gap: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+  }
+
+  .header-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: inherit;
+    flex-shrink: 0;
+  }
+
+  .logo-badge {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, #1a56db, #0ea5e9);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; color: #fff;
+    letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(26,86,219,.35);
+  }
+
+  .logo-text { line-height: 1.1; }
+  .logo-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--primary); }
+  .logo-text span { font-size: 11px; color: var(--text-3); font-weight: 400; }
+
+  .header-divider { width: 1px; height: 28px; background: var(--border); }
+
+  .header-subtitle { font-size: 12px; color: var(--text-2); font-weight: 500; }
+
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+  .edition-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid var(--primary-mid);
+    padding: 4px 10px; border-radius: 99px;
+  }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 6px; border: none; background: none;
+    border-radius: var(--radius-sm);
+    transition: background .15s;
+  }
+  .hamburger:hover { background: var(--bg); }
+  .hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--text-2); border-radius: 2px;
+    transition: all .25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* ── OVERLAY ── */
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; z-index: 49;
+    background: rgba(0,0,0,.4); backdrop-filter: blur(2px);
+  }
+  .sidebar-overlay.active { display: block; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    margin-top: var(--header-h);
+    min-height: calc(100vh - var(--header-h));
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 20px 0;
+    z-index: 50;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .sidebar-section { margin-bottom: 8px; }
+
+  .sidebar-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text-3);
+    padding: 6px 20px 4px;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 20px;
+    font-size: 13px; font-weight: 500; color: var(--text-2);
+    cursor: pointer;
+    transition: all .15s;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .nav-item:hover {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-left-color: var(--primary);
+    font-weight: 600;
+  }
+
+  .nav-item .nav-icon {
+    width: 28px; height: 28px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+    background: var(--bg);
+    transition: background .15s;
+  }
+
+  .nav-item.active .nav-icon {
+    background: var(--primary-mid);
+  }
+
+  .nav-sub {
+    display: none;
+    padding: 2px 0;
+  }
+  .nav-sub.open { display: block; }
+
+  .nav-sub-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px 6px 54px;
+    font-size: 12px; font-weight: 500; color: var(--text-3);
+    cursor: pointer;
+    transition: all .15s;
+    text-decoration: none;
+    user-select: none;
+  }
+  .nav-sub-item:hover { color: var(--primary); background: var(--primary-light); }
+  .nav-sub-item.active { color: var(--primary); font-weight: 600; }
+  .nav-sub-item::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor; flex-shrink: 0;
+  }
+
+  .chevron {
+    margin-left: auto; font-size: 10px; color: var(--text-3);
+    transition: transform .2s;
+  }
+  .nav-item.expanded .chevron { transform: rotate(90deg); }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 32px;
+    max-width: 900px;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; animation: fadeUp .3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO (section 0 = beranda) ── */
+  .hero {
+    background: linear-gradient(135deg, #1a56db 0%, #0ea5e9 100%);
+    border-radius: 16px;
+    padding: 40px 36px;
+    color: #fff;
+    margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; right: -40px; top: -40px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: rgba(255,255,255,.08);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: 40px; bottom: -60px;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: rgba(255,255,255,.06);
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: .05em;
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 4px 12px; border-radius: 99px;
+    margin-bottom: 12px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+  .hero p { font-size: 14px; opacity: .85; max-width: 480px; line-height: 1.6; }
+
+  .quick-nav {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .quick-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    box-shadow: var(--shadow);
+  }
+  .quick-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light), var(--shadow);
+    transform: translateY(-2px);
+  }
+  .quick-card .qc-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .quick-card .qc-label { font-size: 12px; font-weight: 600; color: var(--text); }
+  .quick-card .qc-desc { font-size: 11px; color: var(--text-3); line-height: 1.4; }
+
+  /* ── CONTENT TYPOGRAPHY ── */
+  .section-heading {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-heading .sh-badge {
+    background: var(--primary);
+    color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .section-heading h2 { font-size: 22px; font-weight: 700; }
+
+  .sub-section { margin-bottom: 28px; }
+  .sub-section h3 {
+    font-size: 15px; font-weight: 700; color: var(--text);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-section h3::before {
+    content: '';
+    display: inline-block; width: 4px; height: 16px;
+    background: var(--primary); border-radius: 2px;
+  }
+
+  p { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 12px; }
+
+  /* ── STEP CARDS ── */
+  .steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .step-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    box-shadow: var(--shadow);
+    transition: border-color .15s;
+  }
+  .step-item:hover { border-color: var(--primary-mid); }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-content strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .step-content span { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+
+  /* ── INFO BOXES ── */
+  .info-box {
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 13px; line-height: 1.6;
+  }
+  .info-box .ib-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .info-box.tip { background: var(--success-light); color: #065f46; }
+  .info-box.warning { background: var(--warning-light); color: #92400e; }
+  .info-box.danger { background: var(--danger-light); color: #991b1b; }
+  .info-box.info { background: var(--primary-light); color: #1e3a8a; }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--bg); }
+  th {
+    padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--text-3); border-bottom: 1px solid var(--border);
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 99px;
+  }
+  .badge.required { background: #fee2e2; color: #991b1b; }
+  .badge.optional { background: #e0e7ff; color: #3730a3; }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .feature-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .feature-card .fc-icon { font-size: 22px; margin-bottom: 8px; }
+  .feature-card strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .feature-card span { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+
+  /* ── STATUS INDICATORS ── */
+  .status-demo {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .status-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .status-dot.complete { background: var(--success); box-shadow: 0 0 0 3px var(--success-light); }
+  .status-dot.incomplete { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-light); }
+  .status-text strong { display: block; font-size: 13px; font-weight: 600; }
+  .status-text span { font-size: 12px; color: var(--text-2); }
+
+  /* ── PROGRESS BAR DEMO ── */
+  .progress-demo {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px;
+    box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .progress-demo p { margin-bottom: 10px; font-size: 13px; color: var(--text-2); }
+  .progress-bar { height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
+  .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #1a56db, #0ea5e9); transition: width 1s ease; }
+  .progress-label { font-size: 12px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; }
+
+  /* ── TROUBLESHOOT ── */
+  .trouble-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); margin-bottom: 10px;
+    overflow: hidden; box-shadow: var(--shadow);
+    cursor: pointer;
+  }
+  .trouble-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px;
+    transition: background .15s;
+  }
+  .trouble-item:hover .trouble-head { background: var(--bg); }
+  .trouble-head .trouble-icon { font-size: 14px; }
+  .trouble-head strong { font-size: 13px; font-weight: 600; flex: 1; }
+  .trouble-head .trouble-arrow { font-size: 11px; color: var(--text-3); transition: transform .2s; }
+  .trouble-item.open .trouble-arrow { transform: rotate(90deg); }
+  .trouble-body { display: none; padding: 0 16px 14px 44px; }
+  .trouble-item.open .trouble-body { display: block; }
+  .trouble-body .cause { font-size: 12px; color: var(--text-3); margin-bottom: 6px; }
+  .trouble-body .solution {
+    font-size: 13px; color: var(--success);
+    background: var(--success-light);
+    padding: 8px 12px; border-radius: 6px;
+  }
+
+  /* ── TIPS LIST ── */
+  .tips-list { display: flex; flex-direction: column; gap: 8px; }
+  .tip-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--success-light); border-radius: var(--radius-sm);
+    padding: 12px 14px; font-size: 13px; color: #065f46;
+  }
+  .tip-item::before { content: '✓'; font-weight: 700; flex-shrink: 0; }
+
+  /* ── TOC (home) ── */
+  .toc { display: flex; flex-direction: column; gap: 8px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    cursor: pointer; transition: all .2s;
+    box-shadow: var(--shadow);
+    text-decoration: none; color: inherit;
+  }
+  .toc-item:hover {
+    border-color: var(--primary); background: var(--primary-light);
+  }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; color: var(--text-3);
+    width: 28px; flex-shrink: 0;
+  }
+  .toc-info strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); }
+  .toc-info span { font-size: 12px; color: var(--text-3); }
+  .toc-arrow { margin-left: auto; color: var(--text-3); font-size: 12px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 260px; }
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.mobile-open { transform: translateX(0); box-shadow: var(--shadow-md); }
+    .main { margin-left: 0; padding: 20px 16px; }
+    .hamburger { display: flex; }
+    .quick-nav { grid-template-columns: repeat(2, 1fr); }
+    .feature-grid { grid-template-columns: 1fr; }
+    .hero { padding: 28px 24px; }
+    .hero h1 { font-size: 22px; }
+    .header-subtitle { display: none; }
+    .header-divider { display: none; }
+  }
+  @media (max-width: 480px) {
+    .quick-nav { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="header-logo" href="#" onclick="showSection('home');return false;">
+    <div class="logo-badge">SP</div>
+    <div class="logo-text">
+      <strong>SIPATDU</strong>
+      <span>Sistem Pelaporan Rapat Terpadu</span>
+    </div>
+  </a>
+  <div class="header-divider"></div>
+  <span class="header-subtitle">RSUD Dr. Saiful Anwar Malang</span>
+  <div class="header-right">
+    <span class="edition-badge">Edisi 2026</span>
+  </div>
+</header>
+
+<!-- OVERLAY -->
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigasi</div>
+      <a class="nav-item active" onclick="showSection('home')" href="#">
+        <span class="nav-icon">🏠</span> Beranda
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Bab 1–2</div>
+      <a class="nav-item" onclick="toggleSub('sub-bab1');showSection('bab1')" href="#">
+        <span class="nav-icon">📋</span> Mengenal SIPATDU
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab1">
+        <a class="nav-sub-item" onclick="showSection('bab1');scrollTo('s1-1')" href="#">Apa itu SIPATDU?</a>
+        <a class="nav-sub-item" onclick="showSection('bab1');scrollTo('s1-2')" href="#">Tujuan Penggunaan</a>
+        <a class="nav-sub-item" onclick="showSection('bab1');scrollTo('s1-3')" href="#">Fitur Utama</a>
+      </div>
+
+      <a class="nav-item" onclick="toggleSub('sub-bab2');showSection('bab2')" href="#">
+        <span class="nav-icon">🚀</span> Memulai Aplikasi
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab2">
+        <a class="nav-sub-item" onclick="showSection('bab2');scrollTo('s2-1')" href="#">Cara Membuka</a>
+        <a class="nav-sub-item" onclick="showSection('bab2');scrollTo('s2-2')" href="#">Tampilan Halaman Utama</a>
+        <a class="nav-sub-item" onclick="showSection('bab2');scrollTo('s2-3')" href="#">Panel Statistik</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Bab 3–4</div>
+      <a class="nav-item" onclick="toggleSub('sub-bab3');showSection('bab3')" href="#">
+        <span class="nav-icon">📝</span> Mengelola Data Rapat
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab3">
+        <a class="nav-sub-item" onclick="showSection('bab3');scrollTo('s3-1')" href="#">Menambahkan Rapat</a>
+        <a class="nav-sub-item" onclick="showSection('bab3');scrollTo('s3-2')" href="#">Mengedit Data</a>
+        <a class="nav-sub-item" onclick="showSection('bab3');scrollTo('s3-3')" href="#">Menghapus Data</a>
+      </div>
+
+      <a class="nav-item" onclick="toggleSub('sub-bab4');showSection('bab4')" href="#">
+        <span class="nav-icon">📎</span> Dokumen Rapat
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab4">
+        <a class="nav-sub-item" onclick="showSection('bab4');scrollTo('s4-1')" href="#">Jenis Dokumen</a>
+        <a class="nav-sub-item" onclick="showSection('bab4');scrollTo('s4-2')" href="#">Upload Dokumen Wajib</a>
+        <a class="nav-sub-item" onclick="showSection('bab4');scrollTo('s4-3')" href="#">Materi Rapat (Opsional)</a>
+        <a class="nav-sub-item" onclick="showSection('bab4');scrollTo('s4-4')" href="#">Upload Foto Dokumentasi</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Bab 5–7</div>
+      <a class="nav-item" onclick="toggleSub('sub-bab5');showSection('bab5')" href="#">
+        <span class="nav-icon">🔍</span> Pencarian & Filter
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab5">
+        <a class="nav-sub-item" onclick="showSection('bab5');scrollTo('s5-1')" href="#">Mencari Data Rapat</a>
+        <a class="nav-sub-item" onclick="showSection('bab5');scrollTo('s5-2')" href="#">Filter Berdasarkan Status</a>
+        <a class="nav-sub-item" onclick="showSection('bab5');scrollTo('s5-3')" href="#">Melihat Detail Rapat</a>
+      </div>
+
+      <a class="nav-item" onclick="toggleSub('sub-bab6');showSection('bab6')" href="#">
+        <span class="nav-icon">✅</span> Status Kelengkapan
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab6">
+        <a class="nav-sub-item" onclick="showSection('bab6');scrollTo('s6-1')" href="#">Status Belum Lengkap</a>
+        <a class="nav-sub-item" onclick="showSection('bab6');scrollTo('s6-2')" href="#">Status Lengkap</a>
+        <a class="nav-sub-item" onclick="showSection('bab6');scrollTo('s6-3')" href="#">Progress Dokumen</a>
+      </div>
+
+      <a class="nav-item" onclick="toggleSub('sub-bab7');showSection('bab7')" href="#">
+        <span class="nav-icon">💡</span> Tips & Kendala
+        <span class="chevron">▶</span>
+      </a>
+      <div class="nav-sub" id="sub-bab7">
+        <a class="nav-sub-item" onclick="showSection('bab7');scrollTo('s7-1')" href="#">Tips Penggunaan</a>
+        <a class="nav-sub-item" onclick="showSection('bab7');scrollTo('s7-2')" href="#">Kendala dan Solusi</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HOME -->
+    <div class="section active" id="section-home">
+      <div class="hero">
+        <div class="hero-badge">📘 Buku Panduan Pengguna</div>
+        <h1>Panduan Penggunaan SIPATDU</h1>
+        <p>Sistem Pelaporan Rapat Terpadu — RSUD Dr. Saiful Anwar Malang. Panduan lengkap untuk memulai, mengelola rapat, dan memastikan kelengkapan dokumen.</p>
+      </div>
+
+      <div class="quick-nav">
+        <div class="quick-card" onclick="showSection('bab3')">
+          <div class="qc-icon" style="background:#eff6ff">📝</div>
+          <div class="qc-label">Tambah Rapat</div>
+          <div class="qc-desc">Cara mendaftarkan rapat baru ke sistem</div>
+        </div>
+        <div class="quick-card" onclick="showSection('bab4')">
+          <div class="qc-icon" style="background:#f0fdf4">📎</div>
+          <div class="qc-label">Upload Dokumen</div>
+          <div class="qc-desc">TOR, Undangan, Absensi, Notulen & Foto</div>
+        </div>
+        <div class="quick-card" onclick="showSection('bab5')">
+          <div class="qc-icon" style="background:#fefce8">🔍</div>
+          <div class="qc-label">Cari Rapat</div>
+          <div class="qc-desc">Pencarian dan filter data rapat</div>
+        </div>
+        <div class="quick-card" onclick="showSection('bab6')">
+          <div class="qc-icon" style="background:#f0fdf4">✅</div>
+          <div class="qc-label">Status Lengkap</div>
+          <div class="qc-desc">Memahami status kelengkapan dokumen</div>
+        </div>
+        <div class="quick-card" onclick="showSection('bab7')">
+          <div class="qc-icon" style="background:#fff7ed">💡</div>
+          <div class="qc-label">Tips & Kendala</div>
+          <div class="qc-desc">Solusi masalah umum penggunaan</div>
+        </div>
+        <div class="quick-card" onclick="showSection('bab1')">
+          <div class="qc-icon" style="background:#fdf4ff">📋</div>
+          <div class="qc-label">Tentang SIPATDU</div>
+          <div class="qc-desc">Fitur dan tujuan aplikasi</div>
+        </div>
+      </div>
+
+      <div class="sub-section">
+        <h3>Daftar Isi</h3>
+        <div class="toc">
+          <div class="toc-item" onclick="showSection('bab1')">
+            <span class="toc-num">BAB 1</span>
+            <div class="toc-info">
+              <strong>Mengenal SIPATDU</strong>
+              <span>Apa itu SIPATDU, tujuan, dan fitur utama</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab2')">
+            <span class="toc-num">BAB 2</span>
+            <div class="toc-info">
+              <strong>Memulai Aplikasi</strong>
+              <span>Cara membuka, tampilan utama, dan panel statistik</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab3')">
+            <span class="toc-num">BAB 3</span>
+            <div class="toc-info">
+              <strong>Mengelola Data Rapat</strong>
+              <span>Tambah, edit, dan hapus data rapat</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab4')">
+            <span class="toc-num">BAB 4</span>
+            <div class="toc-info">
+              <strong>Dokumen Rapat</strong>
+              <span>Upload TOR, Undangan, Absensi, Notulen, Materi & Foto</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab5')">
+            <span class="toc-num">BAB 5</span>
+            <div class="toc-info">
+              <strong>Pencarian dan Filter</strong>
+              <span>Mencari, menyaring, dan melihat detail rapat</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab6')">
+            <span class="toc-num">BAB 6</span>
+            <div class="toc-info">
+              <strong>Status Kelengkapan Dokumen</strong>
+              <span>Memahami status Lengkap, Belum Lengkap, dan progress bar</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+          <div class="toc-item" onclick="showSection('bab7')">
+            <span class="toc-num">BAB 7</span>
+            <div class="toc-info">
+              <strong>Tips & Kendala Umum</strong>
+              <span>Tips terbaik dan solusi masalah teknis</span>
+            </div>
+            <span class="toc-arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAB 1 -->
+    <div class="section" id="section-bab1">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 1</span>
+        <h2>Mengenal SIPATDU</h2>
+      </div>
+
+      <div class="sub-section" id="s1-1">
+        <h3>1.1 Apa itu SIPATDU?</h3>
+        <p>SIPATDU (Sistem Pelaporan Rapat Terpadu) adalah aplikasi berbasis web yang dikembangkan khusus untuk membantu pengelolaan administrasi rapat di lingkungan RSUD Dr. Saiful Anwar Malang.</p>
+        <p>Aplikasi ini memungkinkan pengguna untuk mencatat data rapat, mengunggah dokumen pendukung, serta memantau kelengkapan dokumen rapat secara real-time.</p>
+        <div class="info-box info">
+          <span class="ib-icon">☁️</span>
+          <span>Seluruh dokumen yang diunggah akan tersimpan secara otomatis di <strong>Google Drive</strong> dengan struktur folder yang tertata per rapat, sehingga mudah ditemukan kembali kapanpun dibutuhkan.</span>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s1-2">
+        <h3>1.2 Tujuan Penggunaan</h3>
+        <p>SIPATDU dirancang untuk menjawab kebutuhan pengelolaan administrasi rapat yang selama ini masih dilakukan secara manual. Tujuan utamanya:</p>
+        <div class="tips-list">
+          <div class="tip-item">Menyimpan data rapat secara terpusat dan terstruktur.</div>
+          <div class="tip-item">Memastikan kelengkapan dokumen rapat (TOR, Undangan, Absensi, Notulen, Materi, dan Foto).</div>
+          <div class="tip-item">Memudahkan pencarian kembali data dan dokumen rapat.</div>
+          <div class="tip-item">Memberikan informasi status kelengkapan dokumen secara otomatis.</div>
+          <div class="tip-item">Mengurangi penggunaan dokumen fisik dengan sistem digital berbasis cloud.</div>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s1-3">
+        <h3>1.3 Fitur Utama</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="fc-icon">📋</div>
+            <strong>Registrasi Rapat</strong>
+            <span>Daftarkan rapat baru dengan mengisi form data rapat.</span>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">✏️</div>
+            <strong>Manajemen Data</strong>
+            <span>Edit dan hapus data rapat yang sudah tersimpan.</span>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">📤</div>
+            <strong>Upload Dokumen</strong>
+            <span>Unggah 6 jenis dokumen rapat langsung dari aplikasi.</span>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">📸</div>
+            <strong>Foto Dokumentasi</strong>
+            <span>Upload banyak foto ke folder Google Drive per rapat.</span>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">✅</div>
+            <strong>Status Otomatis</strong>
+            <span>Status 'Lengkap' muncul otomatis jika semua dokumen terpenuhi.</span>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">🔍</div>
+            <strong>Pencarian & Filter</strong>
+            <span>Cari data rapat berdasarkan nama, nomor, satker, atau status.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('home')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← Beranda</button>
+        <button onclick="showSection('bab2')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 2: Memulai Aplikasi →</button>
+      </div>
+    </div>
+
+    <!-- BAB 2 -->
+    <div class="section" id="section-bab2">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 2</span>
+        <h2>Memulai Aplikasi</h2>
+      </div>
+
+      <div class="sub-section" id="s2-1">
+        <h3>2.1 Cara Membuka SIPATDU</h3>
+        <p>SIPATDU tidak memerlukan instalasi apapun. Aplikasi dapat langsung dibuka menggunakan browser di komputer, laptop, maupun ponsel.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Buka Browser</strong><span>Gunakan Google Chrome, Microsoft Edge, atau Mozilla Firefox.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Masukkan Link</strong><span>Ketikkan atau klik link SIPATDU yang telah dibagikan oleh admin.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Tunggu Halaman Tampil</strong><span>Halaman utama akan muncul secara otomatis dalam beberapa detik.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Mulai Menggunakan</strong><span>Aplikasi siap digunakan tanpa perlu login atau membuat akun.</span></div></div>
+        </div>
+        <div class="info-box warning">
+          <span class="ib-icon">⚠️</span>
+          <span>Pastikan perangkat terhubung ke internet saat menggunakan SIPATDU, terutama saat mengunggah dokumen atau foto.</span>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s2-2">
+        <h3>2.2 Tampilan Halaman Utama</h3>
+        <p>Setelah aplikasi terbuka, pengguna akan langsung melihat halaman utama yang terdiri dari beberapa bagian:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Komponen</th><th>Keterangan</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Header aplikasi</strong></td><td>Berisi logo SIPATDU dan tombol Tambah Rapat.</td></tr>
+              <tr><td><strong>Panel statistik</strong></td><td>Menampilkan ringkasan data rapat.</td></tr>
+              <tr><td><strong>Toolbar</strong></td><td>Berisi kolom pencarian, filter status, dan tombol Refresh.</td></tr>
+              <tr><td><strong>Tabel data rapat</strong></td><td>Menampilkan seluruh daftar rapat yang tersimpan.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s2-3">
+        <h3>2.3 Panel Statistik</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Statistik</th><th>Keterangan</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Total Rapat</strong></td><td>Jumlah seluruh rapat yang telah terdaftar di sistem.</td></tr>
+              <tr><td><strong>Dokumen Lengkap</strong></td><td>Jumlah rapat yang seluruh dokumen wajibnya sudah terpenuhi.</td></tr>
+              <tr><td><strong>Belum Lengkap</strong></td><td>Jumlah rapat yang masih ada dokumen yang belum diunggah.</td></tr>
+              <tr><td><strong>Rapat Bulan Ini</strong></td><td>Jumlah rapat yang diinput pada bulan berjalan.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab1')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 1</button>
+        <button onclick="showSection('bab3')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 3: Kelola Data →</button>
+      </div>
+    </div>
+
+    <!-- BAB 3 -->
+    <div class="section" id="section-bab3">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 3</span>
+        <h2>Mengelola Data Rapat</h2>
+      </div>
+
+      <div class="sub-section" id="s3-1">
+        <h3>3.1 Menambahkan Rapat Baru</h3>
+        <p>Setiap kali ada rapat baru, pengguna perlu mendaftarkannya ke SIPATDU agar data rapat tersimpan dan folder dokumen dibuat secara otomatis.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Klik tombol + Tambah Rapat</strong><span>Tombol berwarna biru di pojok kanan atas halaman.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Isi form data rapat</strong><span>Lengkapi data pada form yang muncul.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Klik tombol Simpan</strong><span>Klik tombol Simpan di bagian bawah form.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Notifikasi berhasil</strong><span>Sistem akan menampilkan notifikasi bahwa rapat berhasil didaftarkan.</span></div></div>
+        </div>
+
+        <h3 style="margin-top:20px;">Data yang perlu diisi:</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Keterangan</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Nama Rapat</strong></td><td>Nama lengkap rapat, contoh: Rapat Koordinasi Bulanan SDM.</td><td><span class="badge required">Wajib</span></td></tr>
+              <tr><td><strong>Tanggal Rapat</strong></td><td>Tanggal pelaksanaan rapat.</td><td><span class="badge required">Wajib</span></td></tr>
+              <tr><td><strong>Jam Mulai</strong></td><td>Jam rapat dimulai.</td><td><span class="badge required">Wajib</span></td></tr>
+              <tr><td><strong>Tempat</strong></td><td>Lokasi pelaksanaan rapat.</td><td><span class="badge required">Wajib</span></td></tr>
+              <tr><td><strong>Unit / Satker</strong></td><td>Unit kerja atau satuan kerja penyelenggara.</td><td><span class="badge required">Wajib</span></td></tr>
+              <tr><td><strong>Penanggung Jawab</strong></td><td>Nama penanggungjawab rapat.</td><td><span class="badge optional">Opsional</span></td></tr>
+              <tr><td><strong>Notulis</strong></td><td>Nama notulis rapat.</td><td><span class="badge optional">Opsional</span></td></tr>
+              <tr><td><strong>Jumlah Peserta</strong></td><td>Jumlah peserta yang hadir.</td><td><span class="badge optional">Opsional</span></td></tr>
+              <tr><td><strong>Catatan</strong></td><td>Catatan tambahan bila diperlukan.</td><td><span class="badge optional">Opsional</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box tip">
+          <span class="ib-icon">✅</span>
+          <span>Setelah rapat berhasil disimpan, sistem akan otomatis membuat folder khusus di Google Drive untuk menyimpan dokumentasi foto rapat tersebut. Nomor laporan juga akan dibuat otomatis, contoh: <strong>RSSA-2026-001</strong>.</span>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s3-2">
+        <h3>3.2 Mengedit Data Rapat</h3>
+        <p>Jika ada kesalahan data rapat yang sudah tersimpan, pengguna dapat memperbaikinya dengan fitur Edit.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Temukan rapat yang ingin diedit</strong><span>Cari pada tabel menggunakan kolom pencarian bila perlu.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Klik tombol Edit</strong><span>Tombol ikon pensil (✎) pada baris rapat yang dituju.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Ubah data yang perlu diperbaiki</strong><span>Ganti isi field yang salah pada form yang muncul.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Klik Simpan</strong><span>Data rapat akan langsung diperbarui.</span></div></div>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s3-3">
+        <h3>3.3 Menghapus Data Rapat</h3>
+        <p>Data rapat yang tidak diperlukan dapat dihapus dari sistem.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Temukan rapat yang ingin dihapus</strong><span>Gunakan kolom pencarian jika perlu.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Klik tombol Hapus</strong><span>Tombol ikon tempat sampah pada baris rapat yang dituju.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Konfirmasi penghapusan</strong><span>Klik OK pada dialog konfirmasi yang muncul.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Data terhapus</strong><span>Rapat akan hilang dari daftar secara permanen.</span></div></div>
+        </div>
+        <div class="info-box danger">
+          <span class="ib-icon">⛔</span>
+          <span>Penghapusan data bersifat <strong>permanen</strong>. Pastikan data yang akan dihapus memang sudah tidak diperlukan sebelum mengkonfirmasi.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab2')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 2</button>
+        <button onclick="showSection('bab4')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 4: Dokumen Rapat →</button>
+      </div>
+    </div>
+
+    <!-- BAB 4 -->
+    <div class="section" id="section-bab4">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 4</span>
+        <h2>Dokumen Rapat</h2>
+      </div>
+
+      <div class="sub-section" id="s4-1">
+        <h3>4.1 Jenis Dokumen</h3>
+        <p>Setiap rapat dalam SIPATDU memiliki 6 item dokumen yang harus dikelola. Dokumen-dokumen ini dapat diunggah langsung dari aplikasi dan akan tersimpan di Google Drive.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Dokumen</th><th>Status</th><th>Format yang Diterima</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>TOR</strong></td><td><span class="badge required">Wajib</span></td><td>PDF, Word (.doc/.docx)</td></tr>
+              <tr><td>2</td><td><strong>Undangan Rapat</strong></td><td><span class="badge required">Wajib</span></td><td>PDF, Word, Excel</td></tr>
+              <tr><td>3</td><td><strong>Materi Rapat</strong></td><td><span class="badge optional">Opsional</span></td><td>PDF, Word, PowerPoint (.ppt/.pptx)</td></tr>
+              <tr><td>4</td><td><strong>Absensi</strong></td><td><span class="badge required">Wajib</span></td><td>PDF, Word, Excel</td></tr>
+              <tr><td>5</td><td><strong>Notulen Rapat</strong></td><td><span class="badge required">Wajib</span></td><td>PDF, Word (.doc/.docx)</td></tr>
+              <tr><td>6</td><td><strong>Dokumentasi Foto</strong></td><td><span class="badge required">Wajib</span></td><td>JPG, JPEG, PNG (bisa lebih dari 1 file)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s4-2">
+        <h3>4.2 Upload Dokumen Wajib</h3>
+        <p>Langkah ini berlaku untuk mengunggah TOR, Undangan Rapat, Absensi, dan Notulen.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Klik baris rapat</strong><span>Klik pada baris rapat di tabel untuk membuka panel detail.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Temukan item dokumen</strong><span>Cari item dokumen yang ingin diunggah pada daftar dokumen.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Klik tombol Upload</strong><span>Klik tombol Upload pada dokumen tersebut.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Pilih file</strong><span>Pilih file dari komputer atau perangkat yang digunakan.</span></div></div>
+          <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Tunggu proses upload</strong><span>Tunggu hingga notifikasi 'berhasil diupload' muncul.</span></div></div>
+          <div class="step-item"><div class="step-num">6</div><div class="step-content"><strong>Cek status</strong><span>Tombol berubah menjadi 'Lihat' jika upload berhasil.</span></div></div>
+        </div>
+        <div class="info-box warning">
+          <span class="ib-icon">⚠️</span>
+          <span>Ukuran file maksimal <strong>20 MB</strong> per file.</span>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s4-3">
+        <h3>4.3 Materi Rapat (Opsional)</h3>
+        <p>Materi rapat bersifat opsional. Ada dua pilihan yang harus dilakukan:</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div style="background:var(--success-light);border-radius:var(--radius-sm);padding:16px;">
+            <strong style="display:block;font-size:13px;color:#065f46;margin-bottom:10px;">✅ Jika memiliki materi:</strong>
+            <div class="steps">
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;">1</div><div class="step-content"><span>Buka detail rapat</span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;">2</div><div class="step-content"><span>Klik Upload pada Materi Rapat</span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;">3</div><div class="step-content"><span>Pilih file materi (PDF/Word/PPT)</span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;">4</div><div class="step-content"><span>Tunggu proses selesai</span></div></div>
+            </div>
+          </div>
+          <div style="background:var(--warning-light);border-radius:var(--radius-sm);padding:16px;">
+            <strong style="display:block;font-size:13px;color:#92400e;margin-bottom:10px;">📭 Jika tidak ada materi:</strong>
+            <div class="steps">
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;background:var(--warning)">1</div><div class="step-content"><span>Buka detail rapat</span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;background:var(--warning)">2</div><div class="step-content"><span>Klik tombol <strong>'Tidak Ada'</strong></span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;background:var(--warning)">3</div><div class="step-content"><span>Klik OK pada konfirmasi</span></div></div>
+              <div class="step-item" style="padding:10px 12px;"><div class="step-num" style="width:22px;height:22px;font-size:10px;background:var(--warning)">4</div><div class="step-content"><span>Status berubah: 'Tidak Ada Materi'</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s4-4">
+        <h3>4.4 Upload Foto Dokumentasi</h3>
+        <p>Foto dokumentasi dapat diunggah berkali-kali. Setiap foto yang diunggah akan otomatis tersimpan di folder Google Drive yang sudah disiapkan untuk rapat tersebut.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Buka detail rapat</strong><span>Klik baris rapat pada tabel.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Temukan bagian Dokumentasi Foto</strong><span>Cari item 'Dokumentasi Foto' pada daftar dokumen.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Klik tombol + Foto</strong><span>Klik tombol upload foto.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Pilih foto</strong><span>Pilih file foto dari komputer atau perangkat (JPG, PNG, dll).</span></div></div>
+          <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Tunggu upload selesai</strong><span>Notifikasi akan menampilkan jumlah foto yang sudah terupload.</span></div></div>
+          <div class="step-item"><div class="step-num">6</div><div class="step-content"><strong>Tambah foto berikutnya</strong><span>Ulangi langkah 3–5 untuk menambah foto lainnya.</span></div></div>
+          <div class="step-item"><div class="step-num">7</div><div class="step-content"><strong>Lihat semua foto</strong><span>Klik tombol 'Lihat Semua' untuk membuka folder Drive.</span></div></div>
+        </div>
+        <div class="info-box tip">
+          <span class="ib-icon">✅</span>
+          <span>Semua foto tersimpan di Google Drive dalam folder bernama: <strong>RSSA-2026-001 - Nama Rapat</strong>. Tidak perlu membuka Google Drive secara manual — semuanya dilakukan dari SIPATDU.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab3')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 3</button>
+        <button onclick="showSection('bab5')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 5: Pencarian →</button>
+      </div>
+    </div>
+
+    <!-- BAB 5 -->
+    <div class="section" id="section-bab5">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 5</span>
+        <h2>Pencarian dan Filter</h2>
+      </div>
+
+      <div class="sub-section" id="s5-1">
+        <h3>5.1 Mencari Data Rapat</h3>
+        <p>Kolom pencarian tersedia di bagian atas tabel untuk memudahkan pengguna menemukan data rapat dengan cepat.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Kata Kunci Pencarian</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td>Nama rapat</td><td>Rapat Koordinasi Bulanan</td></tr>
+              <tr><td>Nomor laporan</td><td>RSSA-2026-001</td></tr>
+              <tr><td>Nama unit atau satker</td><td>SDM, Farmasi, Keuangan</td></tr>
+              <tr><td>Nama tempat rapat</td><td>Ruang Direksi, Aula Lt.2</td></tr>
+              <tr><td>Penanggung jawab atau notulis</td><td>Nama pegawai</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box info">
+          <span class="ib-icon">💡</span>
+          <span>Data yang sesuai akan tampil <strong>otomatis saat mengetik</strong>. Tidak perlu menekan Enter.</span>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s5-2">
+        <h3>5.2 Filter Berdasarkan Status</h3>
+        <p>Pengguna dapat menyaring data rapat berdasarkan status kelengkapan dokumen.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Pilihan Filter</th><th>Keterangan</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Semua Status</strong></td><td>Menampilkan seluruh data rapat tanpa terkecuali.</td></tr>
+              <tr><td><strong>Lengkap</strong></td><td>Hanya menampilkan rapat yang semua dokumen wajibnya sudah terpenuhi.</td></tr>
+              <tr><td><strong>Belum Lengkap</strong></td><td>Hanya menampilkan rapat yang masih ada dokumen yang belum diunggah.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s5-3">
+        <h3>5.3 Melihat Detail Rapat</h3>
+        <p>Setiap baris rapat pada tabel dapat dibuka untuk melihat informasi lengkap beserta status dokumen.</p>
+        <div class="steps">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Klik baris rapat</strong><span>Klik di mana saja pada baris rapat yang ingin dilihat detailnya.</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Panel detail terbuka</strong><span>Di bawah baris akan muncul panel berisi dua bagian.</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Bagian kiri — Informasi Rapat</strong><span>Menampilkan semua data rapat: nomor, jam, satker, peserta, dll.</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Bagian kanan — Dokumen Rapat</strong><span>Menampilkan 6 item dokumen beserta status dan tombol aksi.</span></div></div>
+          <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Tutup panel</strong><span>Klik kembali baris rapat untuk menutup panel detail.</span></div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab4')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 4</button>
+        <button onclick="showSection('bab6')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 6: Status →</button>
+      </div>
+    </div>
+
+    <!-- BAB 6 -->
+    <div class="section" id="section-bab6">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 6</span>
+        <h2>Status Kelengkapan Dokumen</h2>
+      </div>
+      <p>SIPATDU secara otomatis memantau kelengkapan dokumen setiap rapat. Status ini diperbarui setiap kali pengguna mengunggah dokumen atau menandai materi sebagai 'Tidak Ada'.</p>
+
+      <div class="sub-section" id="s6-1">
+        <h3>6.1 Status Belum Lengkap</h3>
+        <div class="status-demo">
+          <div class="status-row">
+            <div class="status-dot incomplete"></div>
+            <div class="status-text">
+              <strong>Belum Lengkap</strong>
+              <span>Masih ada dokumen wajib yang belum diunggah. Rapat akan tetap berstatus ini sampai semua syarat kelengkapan terpenuhi.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s6-2">
+        <h3>6.2 Status Lengkap</h3>
+        <div class="status-demo">
+          <div class="status-row">
+            <div class="status-dot complete"></div>
+            <div class="status-text">
+              <strong>Lengkap</strong>
+              <span>Muncul otomatis jika semua syarat terpenuhi tanpa perlu diklik atau dikonfirmasi.</span>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Syarat</th><th>Cara Memenuhi</th></tr></thead>
+            <tbody>
+              <tr><td>✅ TOR sudah ada</td><td>Upload file TOR melalui tombol Upload.</td></tr>
+              <tr><td>✅ Undangan Rapat sudah ada</td><td>Upload file undangan melalui tombol Upload.</td></tr>
+              <tr><td>✅ Absensi sudah ada</td><td>Upload file absensi melalui tombol Upload.</td></tr>
+              <tr><td>✅ Notulen sudah ada</td><td>Upload file notulen melalui tombol Upload.</td></tr>
+              <tr><td>✅ Minimal 1 foto dokumentasi</td><td>Upload minimal satu foto menggunakan tombol + Foto.</td></tr>
+              <tr><td>✅ Materi terpenuhi</td><td>Upload file materi ATAU klik tombol <strong>Tidak Ada</strong>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s6-3">
+        <h3>6.3 Progress Dokumen</h3>
+        <p>Pada kolom 'Dokumen' di tabel utama, terdapat progress bar yang menunjukkan berapa dari 5 dokumen wajib yang sudah terpenuhi.</p>
+        <div class="progress-demo">
+          <p><strong>Contoh tampilan progress bar:</strong></p>
+
+          <p style="font-size:12px;color:var(--text-3);margin-bottom:4px;">1/5 — Baru mulai</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+
+          <p style="font-size:12px;color:var(--text-3);margin-bottom:4px;margin-top:10px;">3/5 — Setengah jalan</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+
+          <p style="font-size:12px;color:var(--text-3);margin-bottom:4px;margin-top:10px;">5/5 — Semua dokumen wajib terpenuhi ✓</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,#059669,#10b981)"></div></div>
+
+          <p class="progress-label" style="margin-top:10px;">* Materi rapat tidak dihitung dalam progress karena bersifat opsional.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab5')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 5</button>
+        <button onclick="showSection('bab7')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">BAB 7: Tips & Kendala →</button>
+      </div>
+    </div>
+
+    <!-- BAB 7 -->
+    <div class="section" id="section-bab7">
+      <div class="section-heading">
+        <span class="sh-badge">BAB 7</span>
+        <h2>Tips dan Kendala Umum</h2>
+      </div>
+
+      <div class="sub-section" id="s7-1">
+        <h3>7.1 Tips Penggunaan</h3>
+        <div class="tips-list">
+          <div class="tip-item">Daftarkan rapat ke SIPATDU segera setelah rapat terjadwal, tidak perlu menunggu rapat selesai.</div>
+          <div class="tip-item">Unggah dokumen sesegera mungkin setelah rapat selesai agar tidak terlupakan.</div>
+          <div class="tip-item">Gunakan nama file yang jelas, contoh: <strong>TOR_RapatKoordinasi_April2026.pdf</strong></div>
+          <div class="tip-item">Untuk foto dokumentasi, pilih foto yang relevan, jelas, dan berkualitas baik.</div>
+          <div class="tip-item">Gunakan fitur pencarian untuk menemukan rapat dengan cepat tanpa harus scroll.</div>
+          <div class="tip-item">Klik tombol Refresh jika data tidak muncul atau tampak tidak sesuai.</div>
+          <div class="tip-item">Pastikan koneksi internet stabil sebelum mengupload dokumen.</div>
+        </div>
+      </div>
+
+      <div class="sub-section" id="s7-2">
+        <h3>7.2 Kendala dan Solusi</h3>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">❌</span>
+            <strong>File gagal diupload</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: Koneksi tidak stabil atau file terlalu besar (maks 20 MB).</div>
+            <div class="solution">✅ Solusi: Periksa koneksi, coba lagi, atau perkecil ukuran file.</div>
+          </div>
+        </div>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">🔄</span>
+            <strong>Data tidak muncul setelah disimpan</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: Perlu refresh halaman.</div>
+            <div class="solution">✅ Solusi: Klik tombol Refresh di atas tabel.</div>
+          </div>
+        </div>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">📄</span>
+            <strong>Salah unggah file</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: File yang dipilih tidak sesuai dengan item dokumen.</div>
+            <div class="solution">✅ Solusi: Upload ulang file yang benar pada item dokumen yang sama.</div>
+          </div>
+        </div>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">⏳</span>
+            <strong>Status tidak berubah jadi Lengkap</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: Ada dokumen wajib yang belum terpenuhi.</div>
+            <div class="solution">✅ Solusi: Periksa semua item dokumen, pastikan semua sudah diisi atau ditandai.</div>
+          </div>
+        </div>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">🖱️</span>
+            <strong>Tombol Upload tidak merespons</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: Browser perlu di-refresh atau koneksi terganggu.</div>
+            <div class="solution">✅ Solusi: Refresh halaman browser (F5), kemudian coba kembali.</div>
+          </div>
+        </div>
+
+        <div class="trouble-item" onclick="toggleTrouble(this)">
+          <div class="trouble-head">
+            <span class="trouble-icon">🌐</span>
+            <strong>Halaman tidak terbuka</strong>
+            <span class="trouble-arrow">▶</span>
+          </div>
+          <div class="trouble-body">
+            <div class="cause">Kemungkinan penyebab: Perangkat tidak terhubung internet atau link salah.</div>
+            <div class="solution">✅ Solusi: Periksa koneksi internet dan pastikan link yang digunakan sudah benar.</div>
+          </div>
+        </div>
+
+        <div class="info-box warning" style="margin-top:16px;">
+          <span class="ib-icon">📞</span>
+          <span>Jika kendala yang dialami tidak ada dalam daftar di atas atau tidak dapat diselesaikan sendiri, segera hubungi admin atau pengelola aplikasi SIPATDU di unit kerja masing-masing.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button onclick="showSection('bab6')" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">← BAB 6</button>
+        <button onclick="showSection('home')" style="padding:10px 20px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">🏠 Kembali ke Beranda</button>
+      </div>
+
+      <!-- PENUTUP -->
+      <div style="background:linear-gradient(135deg,#1a56db,#0ea5e9);border-radius:16px;padding:32px;color:#fff;margin-top:32px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:12px;">🏥</div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">SIPATDU — RSUD Dr. Saiful Anwar Malang</h3>
+        <p style="font-size:13px;opacity:.85;margin:0;max-width:400px;margin:0 auto;">Pengelolaan administrasi rapat yang lebih tertib, efisien, dan terpusat. Edisi 2026.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function showSection(id) {
+    // hide all
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    // show target
+    const el = document.getElementById('section-' + id);
+    if (el) el.classList.add('active');
+
+    // update nav active
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const map = {
+      home: 0, bab1: 1, bab2: 3, bab3: 5, bab4: 7, bab5: 9, bab6: 11, bab7: 13
+    };
+    const items = document.querySelectorAll('.nav-item');
+    if (map[id] !== undefined && items[map[id]]) {
+      items[map[id]].classList.add('active');
+    }
+
+    // scroll to top of main
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // close mobile sidebar
+    closeSidebar();
+  }
+
+  function scrollTo(id) {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function toggleSub(id) {
+    const sub = document.getElementById(id);
+    const isOpen = sub.classList.contains('open');
+    // close all
+    document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('open'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('expanded'));
+    if (!isOpen) {
+      sub.classList.add('open');
+      sub.previousElementSibling.classList.add('expanded');
+    }
+  }
+
+  function toggleTrouble(el) {
+    el.classList.toggle('open');
+  }
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = sidebar.classList.contains('mobile-open');
+    if (isOpen) { closeSidebar(); } else { openSidebar(); }
+  });
+
+  function openSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('active');
+    hamburger.classList.add('open');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+    hamburger.classList.remove('open');
+  }
+
+  // Activate progress bars on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = w; }, 300);
+    });
+  });
+</script>
+</body>
+</html>
